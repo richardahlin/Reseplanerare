@@ -151,14 +151,17 @@ public class TestAPrioMap {
     }
 
     public static void main(String[] args) {
-        String filename = "apriomaptestcases.txt";
+        if (args.length != 1) {
+            System.out.println("You must give as an argument the name of the test cases file to use.");
+            System.exit(1);
+        }
         new Thread(new Monitor()).start();
 
         Scanner in = null;
         try {
-            in = new Scanner(new File(filename));
+            in = new Scanner(new File(args[0]));
         } catch (FileNotFoundException e) {
-            System.out.println("The file " + filename + " is not found.");
+            System.out.println("The file " + args[0] + " is not found.");
         }
 
         for (;;) {
