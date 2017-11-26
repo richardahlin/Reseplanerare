@@ -1,6 +1,7 @@
 
 package reseplanerare;
 
+import reseplanerare.PrioMap;
 import java.util.*;
 
 public class APrioMap<K, V extends Comparable<? super V>> implements PrioMap<K, V> {

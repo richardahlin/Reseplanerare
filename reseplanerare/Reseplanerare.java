@@ -1,16 +1,17 @@
 
 package reseplanerare;
 
+import reseplanerare.Graph;
+
 public class Reseplanerare {
 
     public static void main(String[] args) {
-        APrioMap<String, Integer> prioMap = new APrioMap<>();
-        prioMap.put("A", 8);
-        prioMap.put("B", 9);
-        System.out.println(prioMap.get("B"));
-        System.out.println(prioMap.poll());
-        System.out.println(prioMap.poll());
-        System.out.println(prioMap.poll());
+        Graph graph = new Graph();
+        graph.addVertice("Fristad");
+        graph.addVertice("Frufällan");
+        graph.addEdge("Fristad", "Frufällan", 15);
+        graph.addVertice("Nordskogen");
+        graph.addEdge("Frufällan", "Nordskogen", 5);
     }
     
 }
