@@ -58,20 +58,17 @@ public class BinHeap<E> implements PrioQueue<E>{
             return;
         }
 
-        queue.remove(equalsIndex);
-
-        if(queue.size() != 0){
-            queue.add(equalsIndex,queue.get(queue.size() - 1));
-            queue.remove(queue.size() - 1);
-            bubbleUpOrDown(equalsIndex);
-        }
+        remove(equalsIndex);
     }
 
     public void remove(int index){
         if(queue.size() == 0){
             return;
-        }else if(queue.size() == 1){
-            queue.remove(0);
+        }else if((queue.size() - 1) == index){
+            queue.remove(index);
+        }else if((queue.size() - 2) == index){
+            queue.remove(index);
+            bubbleUpOrDown(index);
         }else if(queue.size() > 1){
             queue.remove(index);
             queue.add(index, queue.get(queue.size() - 1));
@@ -130,9 +127,8 @@ public class BinHeap<E> implements PrioQueue<E>{
                     queue.add(leftIndex,queue.get(position));
                     queue.remove(position);
                     queue.add(position,leftElement);
-
-                    return;
                 }
+                return;
             }
         }
     }
@@ -157,5 +153,21 @@ public class BinHeap<E> implements PrioQueue<E>{
 
     public Iterator<E> iterator(){
         return queue.iterator();
+    }
+
+    @Override
+    public String toString(){
+        String finalString = "[";
+        int i = 1;
+        for(E e : queue){
+            if(i != queue.size()){
+                finalString += e.toString() + ",";
+            }else{
+                finalString += e.toString();
+            }
+            i++;
+        }
+        finalString += "]";
+        return finalString;
     }
 }
