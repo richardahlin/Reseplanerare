@@ -111,7 +111,7 @@ public class Graph {
             Pair<String, Node> currentPair = prioMap.poll();
             currentNode = currentPair.b;
 
-            if(currentNode.getName() == dest){
+            if(currentNode.getName().equals(dest)){
                 break;
             }
 

@@ -46,7 +46,7 @@ public class TestDijkstra {
     static void test(Scanner in) {
         log = new StringBuilder();
 
-        log.append("Graph<String> g = new Graph<>();\n");
+        log.append("Graph g = new Graph();\n");
         Graph g = new Graph();
         HashMap<UnorderedPair<String>, Integer> edges = new HashMap<>();
 
@@ -97,7 +97,7 @@ public class TestDijkstra {
                     expres = new Graph.Path(totalDist, vertices);
                 }
 
-                log.append("res = g.shortestPath(\"" + start + "\", \"" + dest + "\");");
+                log.append("g.shortestPath(\"" + start + "\", \"" + dest + "\");");
                 Graph.Path res = null;
                 try {
                     res = g.shortestPath(start, dest);
