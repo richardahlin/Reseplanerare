@@ -20,9 +20,5 @@ public class OurHeapTest{
         System.out.println(pm.toString());
         pm.get("K1");  // result: 3
         System.out.println(pm.toString());
-        
-        
-        pm.swap(0,3);
-        System.out.println(pm.toString());
     }
 }

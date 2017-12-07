@@ -174,6 +174,9 @@ public class APrioMap<K, V extends Comparable<? super V>> implements PrioMap<K, 
         hashMap.put(queue.get(index1).a,index2);
         hashMap.put(queue.get(index2).a,index1);
         
+        System.out.println("Index1: " + hashMap.get(queue.get(index1).a));
+        System.out.println("Index2: " + hashMap.get(queue.get(index2).a));
+        
         if(index2 < index1) {
             int temp = index1;
             index1 = index2;

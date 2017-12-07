@@ -1,0 +1,30 @@
+APrioMap:
+
+Put - O(logn):
+---------------
+Om elementet inte finns i priokön, så lägger vi till elementet sist, och
+bubblar sedan upp det tills det hamnar på rätt plats. Bubblingen tar O(logn)
+tid eftersom att kön är ett binärt träd och man bara behöver byta plats med 
+element i en gren. Om elementet redan finns tar vi bort det och sorterar om
+trädet, vilket tar O(logn) tid för samma anledning som för tilläggningen och
+sedan lägger till det igen, vilket också tar O(logn) tid. Detta resulterar i
+O(2 logn) = O(logn). I varje byte sker även två konstanta tidsoperationer för 
+uppdatering av hashmappen, men dessa bidrar inte till en värre tidskomplexitet 
+överlag.
+
+Get - O(1):
+-----------
+Get-metoden använder sig av hashmappen för att ta ut indexet till ArrayList:en
+som elementet finns lagrat på. Detta är två konstanta tidsoperationer som slutligen
+ger en konstant tid O(1).
+
+Peek - O(1):
+------------
+Peek ser till det första elementet i ArrayList:en och hämtar ut och returnerar det, vilket
+är en konstant operation O(1).
+
+Poll - O(logn):
+---------------
+Poll tar bort det första elementet ur ArrayListen och behöver sedan arrangera om trädet
+genom att byta plats på som mest O(logn) element, alla med konstant tid. Detta resulterar
+i en slutgiltlig tidskomplexitet på O(logn).
