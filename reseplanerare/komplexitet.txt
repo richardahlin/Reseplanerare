@@ -28,3 +28,13 @@ Poll - O(logn):
 Poll tar bort det första elementet ur ArrayListen och behöver sedan arrangera om trädet
 genom att byta plats på som mest O(logn) element, alla med konstant tid. Detta resulterar
 i en slutgiltlig tidskomplexitet på O(logn).
+
+Dijkstra:
+
+ShortestPath:
+-------------
+ShortestPath besöker varje nod max en gång, och för varje besökt nod kollar den alla grannar
+som inte är besökta, vilket betyder att den även bara kollar varje edge max en gång. För varje
+granne till en besökt nod kan grannens prioritet behöva uppdateras, vilket görs i O(logv) tid,
+då vi använder en binär heap som prioritetskö. Detta ger oss den totala tidskomplexiteten
+O((v+e)logv).
