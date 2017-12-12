@@ -71,6 +71,15 @@ public class Graph {
             return neighbours;
         }
 
+        public void printNeighbours(){
+            String neighbourList = "Neighbours: [";
+            for(Pair<Node,Integer> pair : neighbours){
+                neighbourList += pair.a.getName() + ",";
+            }
+            neighbourList += "]";
+            System.out.println(neighbourList);
+        }
+
         public void setTotalDistance(int totalDistance) {
             this.totalDistance = totalDistance;
         }
@@ -104,6 +113,7 @@ public class Graph {
         }
 
         Node currentNode;
+        int distanceToGoal;
 
         while(true) {
             //System.out.println("LOOP11111");
@@ -111,7 +121,12 @@ public class Graph {
             Pair<String, Node> currentPair = prioMap.poll();
             currentNode = currentPair.b;
 
+            //System.out.println("Current node: " + currentNode.getName());
+            //System.out.println("Total Distance: " + currentNode.getTotalDistance());
+            //currentNode.printNeighbours();
+
             if(currentNode.getName().equals(dest)){
+                distanceToGoal = currentNode.getTotalDistance();
                 break;
             }
 
@@ -120,7 +135,10 @@ public class Graph {
                 Node neighbour = pair2.a;
                 int distance = pair2.b;
 
+                //System.out.println("neighbour: " + neighbour.getName());
+
                 if(!visitedNodes.containsKey(neighbour.getName())) {
+                    //System.out.println("Not Visited!");
                     int distanceFromCurrentNode = currentNode.getTotalDistance() + distance;
                     if(distanceFromCurrentNode < neighbour.getTotalDistance()) {
                         neighbour.setTotalDistance(distanceFromCurrentNode);
@@ -128,6 +146,8 @@ public class Graph {
                     }
                 }
             }
+
+            //System.out.println("End of neighbour loop.");
 
             visitedNodes.put(currentNode.getName(), currentNode);
 
@@ -137,21 +157,24 @@ public class Graph {
         }
 
         visitedNodes = new HashMap<>();
-
-        int totalDistance = 0;
         LinkedList<String> nodePath = new LinkedList<>();
+        LinkedList<Integer> pathDistance = new LinkedList<>();
         Node endNode = nodeMap.get(dest);
         nodePath.addFirst(dest);
         currentNode = endNode;
-
         visitedNodes.put(dest,endNode);
-
-        //System.out.println("Current: " + currentNode.getName());
-        //System.out.println("V0 dist: " + nodeMap.get("V0").getTotalDistance());
-        //System.out.println("V2 dist: " + nodeMap.get("V2").getTotalDistance());
+        pathDistance.addFirst(0);
 
         while(!currentNode.getName().equals(start)) {
-            //System.out.println("LOOP222222");
+
+            String totalStringPath = "[";
+            for(String nodeString : nodePath){
+                totalStringPath += nodeString + ",";
+            }
+            totalStringPath += "]";
+            System.out.println(totalStringPath);
+
+            //System.out.println("CurrentNode: " + currentNode.getName());
 
             LinkedList<Pair<Node, Integer>> neighbours = currentNode.getNeighbours();
             Node smallestNode = null;
@@ -159,10 +182,11 @@ public class Graph {
             int neighbourDistance = 0;
 
             for(Pair<Node, Integer> pair : neighbours) {
-                //System.out.println("Name: " + pair.a.getName() + " Distance: " + (pair.a.getTotalDistance() + pair.b));
+                //System.out.println("Neighbour: " + pair.a.getName());
                 if(!(pair.a.getTotalDistance() == Integer.MAX_VALUE) && !(visitedNodes.containsKey(pair.a.getName()))){
-                    if(pair.a.getTotalDistance() + pair.b < smallestDistance) {
-                        //System.out.println("Name: " + pair.a.getName() + " Distance: " + (pair.a.getTotalDistance() + pair.b));
+                    if((pair.a.getTotalDistance() + pair.b < smallestDistance)||
+                        ((pair.a.getTotalDistance() + pair.b <= smallestDistance) && (pair.a.getName().equals(start)))) {
+                        //System.out.println("Replace smallest node!");
                         smallestNode = pair.a;
                         smallestDistance = pair.a.getTotalDistance() + pair.b;
                         neighbourDistance = pair.b;
@@ -170,14 +194,21 @@ public class Graph {
                 }
             }
 
-            nodePath.addFirst(smallestNode.getName());
-            currentNode = smallestNode;
-            totalDistance += neighbourDistance;
-
             visitedNodes.put(currentNode.getName(),currentNode);
+
+            if(((pathDistance.getFirst() + neighbourDistance) > distanceToGoal) ||
+                (smallestDistance == Integer.MAX_VALUE)){
+                nodePath.removeFirst();
+                pathDistance.removeFirst();
+                currentNode = nodeMap.get(nodePath.getFirst());
+            }else{
+                nodePath.addFirst(smallestNode.getName());
+                currentNode = smallestNode;
+                pathDistance.addFirst(neighbourDistance+pathDistance.getFirst());
+            }
         }
 
-        Path path = new Path(totalDistance, nodePath);
+        Path path = new Path(distanceToGoal, nodePath);
         return path;
     }
 }
