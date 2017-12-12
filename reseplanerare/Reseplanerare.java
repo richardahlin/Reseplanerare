@@ -9,25 +9,18 @@ public class Reseplanerare {
         g.addVertice("V4");
         g.addVertice("V5");
         g.addVertice("V6");
-        g.addEdge("V2", "V4", 1);
-        g.addEdge("V4", "V3", 5);
-        g.addEdge("V5", "V3", 3);
-        g.addEdge("V1", "V5", 0);
-        g.addEdge("V1", "V4", 0);
-        g.addEdge("V5", "V2", 1);
-        g.addEdge("V2", "V6", 2);
-        g.addEdge("V0", "V5", 4);
-        g.addEdge("V6", "V1", 5);
-        g.addEdge("V5", "V4", 3);
-        g.addEdge("V0", "V3", 4);
-        g.addEdge("V1", "V3", 5);
-        g.addEdge("V0", "V1", 3);
-        g.addEdge("V3", "V6", 1);
-        g.addEdge("V3", "V2", 1);
-        g.addEdge("V1", "V2", 0);
-        g.addEdge("V4", "V6", 5);
-        g.addEdge("V5", "V6", 3);
-        g.shortestPath("V3", "V4");
+        g.addVertice("V7");
+        g.addVertice("V8");
+        g.addEdge("V2", "V4", 6);
+        g.addEdge("V3", "V4", 0);
+        g.addEdge("V8", "V5", 8);
+        g.addEdge("V4", "V5", 5);
+        g.addEdge("V1", "V3", 1);
+        g.addEdge("V1", "V8", 7);
+        g.addEdge("V8", "V4", 6);
+        g.addEdge("V7", "V2", 7);
+        g.addEdge("V3", "V2", 5);
+        System.out.println(g.shortestPath("V7", "V1").toString());
     }
 
 }

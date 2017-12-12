@@ -164,6 +164,9 @@ public class Graph {
         currentNode = endNode;
         visitedNodes.put(dest,endNode);
         pathDistance.addFirst(0);
+        Node previousNode = null;
+
+        //System.out.println("Distance to goal: " + distanceToGoal);
 
         while(!currentNode.getName().equals(start)) {
 
@@ -172,7 +175,7 @@ public class Graph {
                 totalStringPath += nodeString + ",";
             }
             totalStringPath += "]";
-            System.out.println(totalStringPath);
+            //System.out.println(totalStringPath);
 
             //System.out.println("CurrentNode: " + currentNode.getName());
 
@@ -184,6 +187,7 @@ public class Graph {
             for(Pair<Node, Integer> pair : neighbours) {
                 //System.out.println("Neighbour: " + pair.a.getName());
                 if(!(pair.a.getTotalDistance() == Integer.MAX_VALUE) && !(visitedNodes.containsKey(pair.a.getName()))){
+                    //System.out.println("Non-visited Neighbour: " + pair.a.getName());
                     if((pair.a.getTotalDistance() + pair.b < smallestDistance)||
                         ((pair.a.getTotalDistance() + pair.b <= smallestDistance) && (pair.a.getName().equals(start)))) {
                         //System.out.println("Replace smallest node!");
@@ -194,14 +198,35 @@ public class Graph {
                 }
             }
 
+            String ints = "[";
+            for(Integer val : pathDistance){
+                ints += val + ",";
+            }
+            ints += "]";
+            //System.out.println(ints);
+
+            //System.out.println("Neighbour-distance: " + neighbourDistance);
+
+            if(smallestNode == null){
+                //System.out.println("Null neighbour.");
+            }else{
+                //System.out.println("Smallest neighbour: " + smallestNode.getName() + ", total distance: " +
+                    //(/*pathDistance.getFirst() + */smallestDistance));
+            }
+
             visitedNodes.put(currentNode.getName(),currentNode);
 
             if(((pathDistance.getFirst() + neighbourDistance) > distanceToGoal) ||
                 (smallestDistance == Integer.MAX_VALUE)){
+                if(previousNode != null){
+                    visitedNodes.remove(previousNode.getName());
+                }
+                previousNode = currentNode;
                 nodePath.removeFirst();
                 pathDistance.removeFirst();
                 currentNode = nodeMap.get(nodePath.getFirst());
             }else{
+                previousNode = null;
                 nodePath.addFirst(smallestNode.getName());
                 currentNode = smallestNode;
                 pathDistance.addFirst(neighbourDistance+pathDistance.getFirst());
